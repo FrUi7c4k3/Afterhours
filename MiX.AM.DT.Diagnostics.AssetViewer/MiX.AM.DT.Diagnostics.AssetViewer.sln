@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiX.AM.DT.Diagnostics.AssetViewer", "MiX.AM.DT.Diagnostics.AssetViewer\MiX.AM.DT.Diagnostics.AssetViewer.csproj", "{84D8B44E-380F-4133-B378-C9EF57B0DB57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiX.AM.DT.Diagnostics.AssetViewer.Web", "MiX.AM.DT.Diagnostics.AssetViewer.Web\MiX.AM.DT.Diagnostics.AssetViewer.Web.csproj", "{CD1AC9DF-AE44-4586-A28B-6B24BCAB3DF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiX.AM.DT.Services.Web.AssetApi.Tests", "MiX.AM.DT.AssetApi.Tests\MiX.AM.DT.Services.Web.AssetApi.Tests.csproj", "{1A39F3CC-334F-4AE8-93B6-246067405AA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiX.AM.DT.Services.Web.AssetApi", "MiX.AM.DT.Services.Web.AssetApi\MiX.AM.DT.Services.Web.AssetApi.csproj", "{D4897BEC-212F-4A40-BF44-A581CA60AE8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocoDb", "PocoDb\PocoDb.csproj", "{3E273D5F-F371-46B3-9A21-590167F755DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A39F3CC-334F-4AE8-93B6-246067405AA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A39F3CC-334F-4AE8-93B6-246067405AA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A39F3CC-334F-4AE8-93B6-246067405AA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A39F3CC-334F-4AE8-93B6-246067405AA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E273D5F-F371-46B3-9A21-590167F755DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E273D5F-F371-46B3-9A21-590167F755DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E273D5F-F371-46B3-9A21-590167F755DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E273D5F-F371-46B3-9A21-590167F755DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84D8B44E-380F-4133-B378-C9EF57B0DB57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84D8B44E-380F-4133-B378-C9EF57B0DB57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84D8B44E-380F-4133-B378-C9EF57B0DB57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84D8B44E-380F-4133-B378-C9EF57B0DB57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD1AC9DF-AE44-4586-A28B-6B24BCAB3DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD1AC9DF-AE44-4586-A28B-6B24BCAB3DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD1AC9DF-AE44-4586-A28B-6B24BCAB3DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD1AC9DF-AE44-4586-A28B-6B24BCAB3DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4897BEC-212F-4A40-BF44-A581CA60AE8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4897BEC-212F-4A40-BF44-A581CA60AE8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4897BEC-212F-4A40-BF44-A581CA60AE8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4897BEC-212F-4A40-BF44-A581CA60AE8E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
