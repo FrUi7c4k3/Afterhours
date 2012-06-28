@@ -4,6 +4,6 @@
 						 x:Class="MiX.AM.DT.Diagnostics.AssetViewer.App">
 	
 	<Application.Resources>
-		<local:LoginBootstrapper x:Key="bootstrapper"/>
+		<local:ShellBootstrapper x:Key="bootstrapper"/>
 	</Application.Resources>
 </Application>

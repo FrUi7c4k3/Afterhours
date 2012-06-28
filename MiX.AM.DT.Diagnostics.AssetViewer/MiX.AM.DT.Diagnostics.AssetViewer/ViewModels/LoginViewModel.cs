@@ -6,23 +6,23 @@ using Caliburn.Micro;
 
 namespace MiX.AM.DT.Diagnostics.AssetViewer.ViewModels
 {
-	[Export(typeof(ILoginViewModel))]
-	public class LoginViewModel : Screen, ILoginViewModel
+	public class LoginViewModel : Screen
 	{
-		private readonly IWindowManager _windowManager;
-		private readonly IDashboardViewModel _dashboardViewModel;
-		DispatcherSynchronizationContext syncCtx;
 		private string _userName;
 		private string _password;
 		private string _error;
 
-		[ImportingConstructor]
-		public LoginViewModel(IWindowManager windowManager, IDashboardViewModel dashboardViewModel)
+		private System.Action _onLoginSuccess;
+
+		public LoginViewModel(System.Action onLoginSuccess)
 		{
-			this._windowManager = windowManager;
-			this._dashboardViewModel = dashboardViewModel;
-			syncCtx = new DispatcherSynchronizationContext();
+			if (onLoginSuccess == null)
+				throw new ArgumentNullException("Cannon initialize Login screen with onLoginSuccess set to null.");
+
+			_onLoginSuccess = onLoginSuccess;
 		}
+		
+		#region Properties
 
 		public string UserName
 		{
@@ -63,31 +63,35 @@ namespace MiX.AM.DT.Diagnostics.AssetViewer.ViewModels
 			}
 		}
 
+		#endregion Properties
+
+		#region Methods
+
 		public void Login()
 		{
 			//HttpWebRequest request = HttpWebRequest.CreateHttp("http://localhost/MiX.AM.DT.Services.Web.AssetApi/login");
 			//request.Method = "POST";
 			//request.Headers[HttpRequestHeader.Authorization] = String.Format("username={0}&password={1}", UserName, Password);
 			//request.BeginGetResponse(ctx => ProcessLoginResponse(ctx), request);
-			this._windowManager.ShowDialog(_dashboardViewModel);
-			this.TryClose();
+			_onLoginSuccess();
 		}
 
 		private void ProcessLoginResponse(IAsyncResult ctx)
 		{
-			syncCtx.Send(obj =>
+			Execute.OnUIThread(() =>
 			{
-				var rqst = (HttpWebRequest)ctx.AsyncState;
-				var response = (HttpWebResponse)rqst.EndGetResponse(ctx);
-				if (response.StatusCode == HttpStatusCode.OK && response.Headers[HttpRequestHeader.Authorization] == "Success!")
+				var rqst = (HttpWebRequest) ctx.AsyncState;
+				var response = (HttpWebResponse) rqst.EndGetResponse(ctx);
+				if (response.StatusCode == HttpStatusCode.OK &&
+				    response.Headers[HttpRequestHeader.Authorization] == "Success!")
 				{
 					Error = String.Empty;
-					this._windowManager.ShowDialog(_dashboardViewModel);
-					this.TryClose();
-					return;
+					this._onLoginSuccess();
 				}
 				Error = "Invalid username or password";
-			}, null);
+			});
 		}
+
+		#endregion //Methods
 	}
 }

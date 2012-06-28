@@ -7,10 +7,11 @@
 	using System.ComponentModel.Composition.Primitives;
 	using System.Linq;
 	using Caliburn.Micro;
+	using ViewModels;
 
-	public class LoginBootstrapper : Bootstrapper<ILoginViewModel>
+	public class ShellBootstrapper : Bootstrapper<ShellViewModel>
 	{
-		CompositionContainer container;
+		CompositionContainer _container;
 
 		/// <summary>
 		/// By default, we are configured to use MEF
@@ -21,22 +22,22 @@
 					AssemblySource.Instance.Select(assembly => new AssemblyCatalog(assembly)).OfType<ComposablePartCatalog>()
 					);
 
-			container = CompositionHost.Initialize(catalog);
+			_container = CompositionHost.Initialize(catalog);
 
 			var batch = new CompositionBatch();
 
 			batch.AddExportedValue<IWindowManager>(new WindowManager());
 			batch.AddExportedValue<IEventAggregator>(new EventAggregator());
-			batch.AddExportedValue(container);
+			batch.AddExportedValue(_container);
 			batch.AddExportedValue(catalog);
 
-			container.Compose(batch);
+			_container.Compose(batch);
 		}
 
 		protected override object GetInstance(Type serviceType, string key)
 		{
 			string contract = string.IsNullOrEmpty(key) ? AttributedModelServices.GetContractName(serviceType) : key;
-			var exports = container.GetExportedValues<object>(contract);
+			var exports = _container.GetExportedValues<object>(contract);
 
 			if (exports.Count() > 0)
 				return exports.First();
@@ -46,12 +47,12 @@
 
 		protected override IEnumerable<object> GetAllInstances(Type serviceType)
 		{
-			return container.GetExportedValues<object>(AttributedModelServices.GetContractName(serviceType));
+			return _container.GetExportedValues<object>(AttributedModelServices.GetContractName(serviceType));
 		}
 
 		protected override void BuildUp(object instance)
 		{
-			container.SatisfyImportsOnce(instance);
+			_container.SatisfyImportsOnce(instance);
 		}
 	}
 }
