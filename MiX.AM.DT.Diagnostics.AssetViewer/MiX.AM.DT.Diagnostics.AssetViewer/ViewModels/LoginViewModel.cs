@@ -1,8 +1,9 @@
 ﻿using System;
-using System.ComponentModel.Composition;
 using System.Net;
-using System.Windows.Threading;
 using Caliburn.Micro;
+using MiX.AM.DT.Diagnostics.AssetViewer.Models;
+using MiX.AM.DT.Diagnostics.AssetViewer.Services;
+using Action = System.Action;
 
 namespace MiX.AM.DT.Diagnostics.AssetViewer.ViewModels
 {
@@ -11,17 +12,17 @@ namespace MiX.AM.DT.Diagnostics.AssetViewer.ViewModels
 		private string _userName;
 		private string _password;
 		private string _error;
+		private readonly Action _loginSuccess;
 
-		private System.Action _onLoginSuccess;
+		#region Constructors
 
-		public LoginViewModel(System.Action onLoginSuccess)
+		public LoginViewModel(Action processLoginSuccess)
 		{
-			if (onLoginSuccess == null)
-				throw new ArgumentNullException("Cannon initialize Login screen with onLoginSuccess set to null.");
-
-			_onLoginSuccess = onLoginSuccess;
+			_loginSuccess = processLoginSuccess;
 		}
-		
+
+		#endregion //Constructors
+
 		#region Properties
 
 		public string UserName
@@ -69,27 +70,23 @@ namespace MiX.AM.DT.Diagnostics.AssetViewer.ViewModels
 
 		public void Login()
 		{
-			//HttpWebRequest request = HttpWebRequest.CreateHttp("http://localhost/MiX.AM.DT.Services.Web.AssetApi/login");
-			//request.Method = "POST";
-			//request.Headers[HttpRequestHeader.Authorization] = String.Format("username={0}&password={1}", UserName, Password);
-			//request.BeginGetResponse(ctx => ProcessLoginResponse(ctx), request);
-			_onLoginSuccess();
+			AuthenticationService.Instance.AuthenticateCompleted += OnLoginSuccess;
+			AuthenticationService.Instance.Authenticate(UserName, Password);
 		}
 
-		private void ProcessLoginResponse(IAsyncResult ctx)
+		private void OnLoginSuccess(object sender, AuthenticationResultEventArgs args)
 		{
-			Execute.OnUIThread(() =>
+			if (!args.LoginSuccessful)
 			{
-				var rqst = (HttpWebRequest) ctx.AsyncState;
-				var response = (HttpWebResponse) rqst.EndGetResponse(ctx);
-				if (response.StatusCode == HttpStatusCode.OK &&
-				    response.Headers[HttpRequestHeader.Authorization] == "Success!")
-				{
-					Error = String.Empty;
-					this._onLoginSuccess();
-				}
-				Error = "Invalid username or password";
-			});
+				Error = "Invalid username or password..";
+				return;
+			}
+
+			Action handler = _loginSuccess;
+			if (handler != null)
+			{
+				handler();
+			}
 		}
 
 		#endregion //Methods
